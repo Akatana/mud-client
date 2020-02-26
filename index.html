@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <!-- https://electronjs.org/docs/tutorial/security#csp-meta-tag -->
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+  </head>
+  <body>
+    <div id="console"></div>
+    <input type="text" id="textInput">
+  </body>
+
+  
+<script>
+    const {ipcRenderer} = require('electron');
+    let gameConsole = document.getElementById('console');
+    let gameInput = document.getElementById('textInput');
+
+    ipcRenderer.on('data', function (event, data) {
+      gameConsole.innerHTML += data;
+    });
+
+    gameInput.addEventListener('keyup', function (event) {
+        if (event.keyCode === 13) {
+            ipcRenderer.send('data', gameInput.value);
+        }
+    });
+</script>
+</html>
