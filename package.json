@@ -9,7 +9,8 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "linux": "/home/akatana/coding/mud-client/node_modules/electron/dist/electron --no-sandbox /home/akatana/coding/mud-client"
   },
   "author": "",
   "license": "ISC"
