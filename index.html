@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <div id="terminal" class="draggable terminal">
+    <div id="terminal" class="terminal">
       <div id="console" class="console"></div>
       <input type="text" id="textInput" class="textInput">
     </div>
@@ -23,7 +23,7 @@
 
     ipcRenderer.on('data', function (event, data) {
       gameConsole.innerHTML += data;
-      terminal.scrollTop = terminal.scrollHeight;
+      gameConsole.scrollTop = gameConsole.scrollHeight;
     });
 
     gameInput.addEventListener('keyup', function (event) {
