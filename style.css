@@ -6,21 +6,19 @@ body {
     background-color: wheat;
     height: 500px;
     width: 600px;
-    border: 2px solid black;
+    border: 1px solid black;
 }  
 
 .console {
-    height: 95%;
+    height: 100%;
     white-space: pre-wrap;
     font-family: monospace;
     overflow: auto;
+    border-bottom: 1px solid black;
 }
 
 .textInput {
-    height: 5%;
+    height: 20px;
     width: 100%;
     border: none;
-    position: relative;
-    bottom: 4px;
-    border-top: 2px solid black;
 }

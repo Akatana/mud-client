@@ -6,6 +6,12 @@
     <!-- https://electronjs.org/docs/tutorial/security#csp-meta-tag -->
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="node_modules/jquery-ui-dist/jquery-ui.min.css">
+    <!-- Script Imports -->
+    <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script src="node_modules/jquery-ui-dist/external/jquery/jquery.js"></script>
+    <script src="node_modules/jquery-ui-dist/jquery-ui.js"></script>
+    <script>if (window.module) module = window.module;</script>
   </head>
   <body>
     <div id="terminal" class="terminal">
@@ -20,7 +26,8 @@
       let terminal = document.getElementById('terminal');
       let gameConsole = document.getElementById('console');
       let gameInput = document.getElementById('textInput');
-
+      $( "#terminal" ).draggable();
+      $('#terminal').resizable();
       ipcRenderer.on('data', function (event, data) {
         gameConsole.innerHTML += data;
         gameConsole.scrollTop = gameConsole.scrollHeight;
