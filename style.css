@@ -4,18 +4,23 @@ body {
 
 .terminal {
     background-color: wheat;
-    height: 400px;
-    width: 75%;
+    height: 500px;
+    width: 600px;
+    border: 2px solid black;
 }  
 
 .console {
-    height: 100%;
+    height: 95%;
     white-space: pre-wrap;
     font-family: monospace;
     overflow: auto;
 }
 
 .textInput {
+    height: 5%;
     width: 100%;
     border: none;
+    position: relative;
+    bottom: 4px;
+    border-top: 2px solid black;
 }

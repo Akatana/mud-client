@@ -15,21 +15,21 @@
   </body>
 
   
-<script>
-    const {ipcRenderer} = require('electron');
-    let terminal = document.getElementById('terminal');
-    let gameConsole = document.getElementById('console');
-    let gameInput = document.getElementById('textInput');
+  <script>
+      const {ipcRenderer} = require('electron');
+      let terminal = document.getElementById('terminal');
+      let gameConsole = document.getElementById('console');
+      let gameInput = document.getElementById('textInput');
 
-    ipcRenderer.on('data', function (event, data) {
-      gameConsole.innerHTML += data;
-      gameConsole.scrollTop = gameConsole.scrollHeight;
-    });
+      ipcRenderer.on('data', function (event, data) {
+        gameConsole.innerHTML += data;
+        gameConsole.scrollTop = gameConsole.scrollHeight;
+      });
 
-    gameInput.addEventListener('keyup', function (event) {
-        if (event.keyCode === 13) {
-            ipcRenderer.send('data', gameInput.value);
-        }
-    });
-</script>
+      gameInput.addEventListener('keyup', function (event) {
+          if (event.keyCode === 13) {
+              ipcRenderer.send('data', gameInput.value);
+          }
+      });
+  </script>
 </html>
