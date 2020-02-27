@@ -2,23 +2,28 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <title>Misthaven MUD</title>
     <!-- https://electronjs.org/docs/tutorial/security#csp-meta-tag -->
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <div id="console"></div>
-    <input type="text" id="textInput">
+    <div id="terminal" class="draggable terminal">
+      <div id="console" class="console"></div>
+      <input type="text" id="textInput" class="textInput">
+    </div>
   </body>
 
   
 <script>
     const {ipcRenderer} = require('electron');
+    let terminal = document.getElementById('terminal');
     let gameConsole = document.getElementById('console');
     let gameInput = document.getElementById('textInput');
 
     ipcRenderer.on('data', function (event, data) {
       gameConsole.innerHTML += data;
+      terminal.scrollTop = terminal.scrollHeight;
     });
 
     gameInput.addEventListener('keyup', function (event) {
