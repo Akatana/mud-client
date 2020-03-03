@@ -28,6 +28,7 @@ const menuTemplate = [
         accelerator: 'Alt+R',
         click (item, focusedWindow) {
           client.destroy();
+          BrowserWindow.getFocusedWindow().webContents.send('clientInstructions', "cls");
           connect(BrowserWindow.getFocusedWindow());
         }
       },
@@ -64,7 +65,7 @@ function createWindow () {
   });
 
   win.loadFile('index.html');
-  win.webContents.openDevTools();
+  //win.webContents.openDevTools();
 
   //Establish Socket Connection after Site has loaded
   win.webContents.on('did-finish-load', function () {
