@@ -2,6 +2,7 @@ const { app, BrowserWindow, ipcMain, Menu, MenuItem } = require('electron')
 const net = require('net');
 var Convert = require('ansi-to-html');
 var convert = new Convert();
+var client = new net.Socket();
 
 //Menu Structure
 const menuTemplate = [
@@ -26,7 +27,8 @@ const menuTemplate = [
         label: 'Reconnect',
         accelerator: 'Alt+R',
         click (item, focusedWindow) {
-          console.log("Reconnected");
+          client.destroy();
+          connect(BrowserWindow.getFocusedWindow());
         }
       },
     ]
@@ -59,34 +61,14 @@ function createWindow () {
     webPreferences: {
       nodeIntegration: true
     }
-  })
+  });
 
-  win.loadFile('index.html')
-  //win.webContents.openDevTools()
-
-  let client = new net.Socket();
+  win.loadFile('index.html');
+  win.webContents.openDevTools();
 
   //Establish Socket Connection after Site has loaded
   win.webContents.on('did-finish-load', function () {
-    client.connect(7575, '127.0.0.1', function() {
-        console.log('connected');
-        client.write("l");
-        //TODO: Send Message to Server to indicate that the custom client is used
-    });
-
-    client.on('data', function(data) {
-      data = data.toString();
-      data = data.replace(/\r\n/g, '<br>');
-        win.webContents.send('data', convert.toHtml(data));
-    });
-    
-    client.on('close', function() {
-      console.log('Connection closed');
-    });
-
-    ipcMain.on('data', function(event, data) {
-      client.write(data.toString());
-    });
+    connect(win);
   })
 }
 
@@ -106,3 +88,27 @@ app.on('activate', () => {
     createWindow()
   }
 })
+
+function connect(win) {
+  client = new net.Socket();
+
+  client.connect(7575, '127.0.0.1', function() {
+      console.log('connected');
+      client.write("l");
+      //TODO: Send Message to Server to indicate that the custom client is used
+  });
+
+  client.on('data', function(data) {
+    data = data.toString();
+    data = data.replace(/\r\n/g, '<br>');
+      win.webContents.send('data', convert.toHtml(data));
+  });
+  
+  client.on('close', function() {
+    console.log('Connection closed');
+  });
+
+  ipcMain.on('data', function(event, data) {
+    client.write(data.toString());
+  });
+}
